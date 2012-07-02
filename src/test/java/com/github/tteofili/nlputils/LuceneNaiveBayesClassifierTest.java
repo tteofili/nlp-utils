@@ -17,7 +17,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Testcase for {@link com.github.samplett.nlputils.util.SimpleNaiveBayesClassifier}
+ * Testcase for {@link com.github.tteofili.nlputils.SimpleNaiveBayesClassifier}
  */
 public class LuceneNaiveBayesClassifierTest {
 
