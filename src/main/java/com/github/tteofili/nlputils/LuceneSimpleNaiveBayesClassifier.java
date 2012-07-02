@@ -140,6 +140,6 @@ public class LuceneSimpleNaiveBayesClassifier implements NaiveBayesClassifier<St
     }
 
     private int docCount(String countedClass) throws IOException {
-        return indexSearcher.search(new TermQuery(new Term(classFieldName, countedClass)), 10).totalHits;
+        return indexSearcher.search(new TermQuery(new Term(classFieldName, countedClass)), 1).totalHits;
     }
 }
