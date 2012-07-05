@@ -107,7 +107,7 @@ public class LuceneSimpleNaiveBayesClassifier implements NaiveBayesClassifier<St
             double num = hits + 1; // +1 is added because of add 1 smoothing
 
             // den : for the whole dictionary, count the no of times a word appears in documents of class c (+|V|)
-            double den = countInClassC(c) + 1;
+            double den = countInClassC(c) + docsWithClassSize;
 
             // P(w|c) = num/den
             double wordProbability = num / den;
