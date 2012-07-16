@@ -31,9 +31,6 @@ public class UpdatableSimpleNaiveBayesClassifier implements NaiveBayesClassifier
     private Map<String, Double> priors = new HashMap<String, Double>();
     private Map<String, Double> dens = new HashMap<String, Double>();
 
-    /**
-     * Put your code for adding information to your NB classifier here
-     */
     public void addExample(String klass, List<String> words) {
         vocabulary.addAll(words);
 
@@ -76,9 +73,6 @@ public class UpdatableSimpleNaiveBayesClassifier implements NaiveBayesClassifier
         dens.put(c, den);
     }
 
-    /**
-     * Put your code here for deciding the class of the input file.
-     */
     public String calculateClass(List<String> words) throws Exception {
         Double max = -1000000d;
         String foundClass = null;
