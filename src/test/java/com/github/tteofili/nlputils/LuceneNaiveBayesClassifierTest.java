@@ -121,5 +121,6 @@ public class LuceneNaiveBayesClassifierTest {
                 "aria condiz. e 540.000 Ag.Imm. ").equals("A");
         assertTrue(isAgency);
 
+        indexWriter.close();
     }
 }
