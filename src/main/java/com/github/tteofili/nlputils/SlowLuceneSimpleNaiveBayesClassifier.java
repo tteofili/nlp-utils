@@ -22,7 +22,7 @@ import org.apache.lucene.search.TopDocs;
 /**
  * A Lucene based {@link NaiveBayesClassifier}
  */
-public class LuceneSimpleNaiveBayesClassifier implements NaiveBayesClassifier<String, String> {
+public class SlowLuceneSimpleNaiveBayesClassifier implements NaiveBayesClassifier<String, String> {
 
     private Map<String, Double> priors;
 

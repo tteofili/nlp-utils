@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Testcase for {@link com.github.tteofili.nlputils.SimpleNaiveBayesClassifier}
  */
-public class LuceneNaiveBayesClassifierTest {
+public class SlowLuceneNaiveBayesClassifierTest {
 
     @Test
     public void ppsIntegrationTest() throws Exception {
@@ -106,7 +106,7 @@ public class LuceneNaiveBayesClassifierTest {
 
         IndexSearcher indexSearcher = new IndexSearcher(DirectoryReader.open(indexWriter.getDirectory()));
 
-        LuceneSimpleNaiveBayesClassifier classifier = new LuceneSimpleNaiveBayesClassifier();
+        SlowLuceneSimpleNaiveBayesClassifier classifier = new SlowLuceneSimpleNaiveBayesClassifier();
         classifier.train(indexSearcher, "text", "class", analyzer);
 
         Boolean isAgency = classifier.calculateClass("CENTRO S.Maria Maggiore " +
