@@ -29,7 +29,7 @@ public class RegressionModelUtils {
      * @param hypothesis  the hypothesis representing the model
      * @return the updated weight for the j-th element of the weights vector
      */
-    public double[] leastMeanSquareUpdate(double[] thetas, double alpha, TrainingSet trainingSet, Hypothesis hypothesis) {
+    public static double[] leastMeanSquareUpdate(double[] thetas, double alpha, TrainingSet trainingSet, Hypothesis hypothesis) {
         double errors = 0;
         for (TrainingExample trainingExample : trainingSet) {
             errors += trainingExample.getOutput() - hypothesis.calculateOutput(trainingExample.getInputs());

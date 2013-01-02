@@ -19,4 +19,8 @@ public class TrainingSet implements Iterable<TrainingExample> {
     public void add(TrainingExample trainingExample) {
         trainingExamples.add(trainingExample);
     }
+
+    public int size() {
+        return trainingExamples.size();
+    }
 }
