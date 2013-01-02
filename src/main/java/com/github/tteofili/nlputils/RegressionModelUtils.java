@@ -18,7 +18,7 @@ public class RegressionModelUtils {
             double difference = hypothesis.calculateOutput(trainingExample.getInputs()) - trainingExample.getOutput();
             output += Math.pow(difference, 2);
         }
-        return output / 2;
+        return output / 2d;
     }
 
     /**

@@ -20,7 +20,6 @@ public class GradientDescentUtils {
         while (true) {
             // calcualte cost
             double cost = RegressionModelUtils.ordinaryLeastSquares(trainingSet, hypothesis);
-            System.err.println(cost);
 
             if (cost < THRESHOLD || iterations > MAX_ITERATIONS) {
                 System.err.println(cost + " with parameters " + Arrays.toString(parameters));
@@ -40,7 +39,7 @@ public class GradientDescentUtils {
     private static double[] initializeRandomWeights(int size) {
         double[] doubles = new double[size];
         for (int i = 0; i < doubles.length; i++) {
-            doubles[i] = Math.random() * 0.1;
+            doubles[i] = Math.random() * 0.1d;
         }
         return doubles;
     }

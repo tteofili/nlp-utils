@@ -8,7 +8,7 @@ public class LinearCombinationHypothesis implements Hypothesis {
 
     @Override
     public double calculateOutput(double[] inputs) {
-        int output = 0;
+        double output = 0d;
         for (int i = 0; i < weights.length; i++) {
             output += weights[i] * inputs[i];
         }
