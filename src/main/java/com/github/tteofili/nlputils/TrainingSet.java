@@ -5,18 +5,18 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /**
- * An {@link Iterable} over {@link TrainigExample}s
+ * An {@link Iterable} over {@link TrainingExample}s
  */
-public class TrainingSet implements Iterable<TrainigExample> {
+public class TrainingSet implements Iterable<TrainingExample> {
 
-    private Collection<TrainigExample> trainigExamples = new HashSet<TrainigExample>();
+    private Collection<TrainingExample> trainingExamples = new HashSet<TrainingExample>();
 
     @Override
-    public Iterator<TrainigExample> iterator() {
-        return trainigExamples.iterator();
+    public Iterator<TrainingExample> iterator() {
+        return trainingExamples.iterator();
     }
 
-    public void add(TrainigExample trainigExample) {
-        trainigExamples.add(trainigExample);
+    public void add(TrainingExample trainingExample) {
+        trainingExamples.add(trainingExample);
     }
 }

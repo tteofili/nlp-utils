@@ -5,12 +5,35 @@ package com.github.tteofili.nlputils;
  */
 public class RegressionModelUtils {
 
+    /**
+     * calculate the ordinary least squares (OLS) cost in the given training set for a given hypothesis
+     * @param trainingSet the training set used
+     * @param hypothesis the hypothesis function representing the model
+     * @return the cost of the hypothesis for the given training set using OLS
+     */
     public static double ordinaryLeastSquares(TrainingSet trainingSet, Hypothesis hypothesis) {
         double output = 0;
-        for (TrainigExample trainigExample : trainingSet) {
-            output += Math.pow(hypothesis.calculateOutput(trainigExample.getInputs()) - trainigExample.getOutput(), 2);
+        for (TrainingExample trainingExample : trainingSet) {
+            output += Math.pow(hypothesis.calculateOutput(trainingExample.getInputs()) - trainingExample.getOutput(), 2);
         }
         return output / 2;
+    }
+
+    /**
+     * calculate the least mean square (LMS) update for a given weight
+     * @param thetas the array of weights
+     * @param alpha the learning rate alpha
+     * @param trainingSet the training set to use for learning
+     * @param hypothesis the hypothesis representing the model
+     * @param j the index of the weight to update
+     * @return the updated weight for the j-th element of the weights vector
+     */
+    public double leastMeanSquareUpdate(double[] thetas, double alpha, TrainingSet trainingSet, Hypothesis hypothesis, int j) {
+        double errors = 0;
+        for (TrainingExample trainingExample : trainingSet) {
+            errors += trainingExample.getOutput() - hypothesis.calculateOutput(trainingExample.getInputs());
+        }
+        return thetas[j] + alpha * errors * thetas[j];
     }
 
 }
