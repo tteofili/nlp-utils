@@ -19,13 +19,13 @@ public class GradientDescentUtils {
 
         double cost = Double.MAX_VALUE;
         while (true) {
-            // calcualte cost
+            // calculate cost
             double newCost = RegressionModelUtils.ordinaryLeastSquares(trainingSet, hypothesis);
 
             if (newCost > cost) {
                 throw new RuntimeException("failed to converge at iteration " + iterations + " with cost going from " + cost + " to " + newCost);
             } else if (cost == newCost || newCost < THRESHOLD || iterations > MAX_ITERATIONS) {
-                System.err.println(cost + " with parameters " + Arrays.toString(parameters));
+                System.out.println(cost + " with parameters " + Arrays.toString(parameters));
                 break;
             }
 

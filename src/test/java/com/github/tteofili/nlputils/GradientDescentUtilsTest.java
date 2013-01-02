@@ -11,7 +11,7 @@ public class GradientDescentUtilsTest {
     public void testConvergence() throws Exception {
         TrainingSet trainingSet = new TrainingSet();
         TestUtils.fillTrainingSet(trainingSet, 100, 5);
-        GradientDescentUtils.batchGradientDescent(new LinearCombinationHypothesis(), trainingSet, 0.003);
+        GradientDescentUtils.batchGradientDescent(new LinearCombinationHypothesis(), trainingSet, 0.00002);
     }
 
 }
