@@ -7,6 +7,10 @@ public abstract class NoisyChannel {
 
     private String[] dictionary;
 
+    public void initializeDictionary(String[] dictionary) {
+        this.dictionary = dictionary;
+    }
+
     public String findCorrection(String mispelledWord) {
         Double val = 0d;
         String correctWord = null;
@@ -23,4 +27,5 @@ public abstract class NoisyChannel {
     public abstract Double calculatePrior(String word);
 
     public abstract Double calculateLikelihood(String mispelledWord, String word);
+
 }
