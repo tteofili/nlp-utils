@@ -15,7 +15,8 @@ public class RegressionModelUtils {
     public static double ordinaryLeastSquares(TrainingSet trainingSet, Hypothesis hypothesis) {
         double output = 0;
         for (TrainingExample trainingExample : trainingSet) {
-            output += Math.pow(hypothesis.calculateOutput(trainingExample.getInputs()) - trainingExample.getOutput(), 2);
+            double difference = hypothesis.calculateOutput(trainingExample.getInputs()) - trainingExample.getOutput();
+            output += Math.pow(difference, 2);
         }
         return output / 2;
     }
@@ -30,13 +31,13 @@ public class RegressionModelUtils {
      * @return the updated weight for the j-th element of the weights vector
      */
     public static double[] leastMeanSquareUpdate(double[] thetas, double alpha, TrainingSet trainingSet, Hypothesis hypothesis) {
-        double errors = 0;
-        for (TrainingExample trainingExample : trainingSet) {
-            errors += trainingExample.getOutput() - hypothesis.calculateOutput(trainingExample.getInputs());
-        }
         double[] updatedWeights = new double[thetas.length];
         for (int i = 0; i < updatedWeights.length; i++) {
-            updatedWeights[i] = thetas[i] + alpha * errors * thetas[i];
+            double errors = 0;
+            for (TrainingExample trainingExample : trainingSet) {
+                errors += (trainingExample.getOutput() - hypothesis.calculateOutput(trainingExample.getInputs())) * trainingExample.getInputs()[i];
+            }
+            updatedWeights[i] = thetas[i] + alpha * errors;
         }
         return updatedWeights;
     }

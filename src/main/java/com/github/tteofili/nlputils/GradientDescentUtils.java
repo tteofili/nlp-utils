@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class GradientDescentUtils {
 
     private static final double THRESHOLD = 0.5;
-    private static final int MAX_ITERATIONS = 10000;
+    private static final int MAX_ITERATIONS = 100000;
 
     public static void batchGradientDescent(Hypothesis hypothesis, TrainingSet trainingSet, double alpha) {
         // set initial random weights
@@ -20,8 +20,9 @@ public class GradientDescentUtils {
         while (true) {
             // calcualte cost
             double cost = RegressionModelUtils.ordinaryLeastSquares(trainingSet, hypothesis);
+            System.err.println(cost);
 
-            if (cost == 0 || cost < THRESHOLD || iterations > MAX_ITERATIONS) {
+            if (cost < THRESHOLD || iterations > MAX_ITERATIONS) {
                 System.err.println(cost + " with parameters " + Arrays.toString(parameters));
                 break;
             }
@@ -39,7 +40,7 @@ public class GradientDescentUtils {
     private static double[] initializeRandomWeights(int size) {
         double[] doubles = new double[size];
         for (int i = 0; i < doubles.length; i++) {
-            doubles[i] = Math.random();
+            doubles[i] = Math.random() * 0.1;
         }
         return doubles;
     }
