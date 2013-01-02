@@ -1,7 +1,7 @@
 package com.github.tteofili.nlputils;
 
 /**
- * Add javadoc here
+ * A {@link TrainigExample} holds some inputs and a corresponding output
  */
 public class TrainigExample {
     private double[] inputs;

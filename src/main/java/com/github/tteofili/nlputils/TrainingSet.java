@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /**
- * Add javadoc here
+ * An {@link Iterable} over {@link TrainigExample}s
  */
 public class TrainingSet implements Iterable<TrainigExample> {
 

@@ -1,7 +1,7 @@
 package com.github.tteofili.nlputils;
 
 /**
- * Add javadoc here
+ * Abstract impl of a noisy channel
  */
 public abstract class NoisyChannel {
 

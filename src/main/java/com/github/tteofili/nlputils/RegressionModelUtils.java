@@ -1,7 +1,7 @@
 package com.github.tteofili.nlputils;
 
 /**
- * Add javadoc here
+ * Utility class for calculating various regression models costs
  */
 public class RegressionModelUtils {
 
