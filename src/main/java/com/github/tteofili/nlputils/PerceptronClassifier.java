@@ -1,4 +1,4 @@
-package org.apache.lucene.classification;
+package com.github.tteofili.nlputils;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -20,6 +20,8 @@ package org.apache.lucene.classification;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.classification.ClassificationResult;
+import org.apache.lucene.classification.Classifier;
 import org.apache.lucene.index.AtomicReader;
 import org.apache.lucene.index.MultiFields;
 import org.apache.lucene.index.Terms;
