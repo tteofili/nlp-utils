@@ -33,7 +33,7 @@ public class GradientDescentUtils {
             cost = newCost;
 
             // calculate the updated parameters
-            parameters = RegressionModelUtils.leastMeanSquareUpdate(parameters, alpha, trainingSet, hypothesis);
+            parameters = RegressionModelUtils.batchLeastMeanSquareUpdate(parameters, alpha, trainingSet, hypothesis);
 
             // update weights in the hypothesis
             hypothesis.updateParameters(parameters);
