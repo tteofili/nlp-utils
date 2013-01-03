@@ -28,9 +28,9 @@ public class RegressionModelUtils {
      * @param alpha       the learning rate alpha
      * @param trainingSet the training set to use for learning
      * @param hypothesis  the hypothesis representing the model
-     * @return the updated weight for the j-th element of the weights vector
+     * @return the updated weights vector
      */
-    public static double[] leastMeanSquareUpdate(double[] thetas, double alpha, TrainingSet trainingSet, Hypothesis hypothesis) {
+    public static double[] batchLeastMeanSquareUpdate(double[] thetas, double alpha, TrainingSet trainingSet, Hypothesis hypothesis) {
         double[] updatedWeights = new double[thetas.length];
         for (int i = 0; i < updatedWeights.length; i++) {
             double errors = 0;
@@ -40,6 +40,20 @@ public class RegressionModelUtils {
             updatedWeights[i] = thetas[i] + alpha * errors;
         }
         return updatedWeights;
+    }
+
+    /**
+     * calculate least mean square update for a given training example for the j-th input
+     *
+     * @param thetas          the array of weights
+     * @param alpha           the learning rate alpha
+     * @param trainingExample the training example to use for learning
+     * @param hypothesis      the hypothesis representing the model
+     * @param j               the index of the j-th input
+     * @return the updated weight for the j-th element of the weights vector
+     */
+    public static double singleLeastMeanSquareUpdate(double[] thetas, double alpha, TrainingExample trainingExample, Hypothesis hypothesis, int j) {
+        return thetas[j] + alpha * (trainingExample.getOutput() - hypothesis.calculateOutput(trainingExample.getInputs())) * trainingExample.getInputs()[j];
     }
 
 }
