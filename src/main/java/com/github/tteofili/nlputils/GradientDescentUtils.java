@@ -10,6 +10,14 @@ public class GradientDescentUtils {
     private static final double THRESHOLD = 0.5;
     private static final int MAX_ITERATIONS = 100000;
 
+    /**
+     * Calculates batch gradient descent on the give hypothesis, training set and learning rate alpha.
+     * The algorithms iteratively adjusts the hypothesis parameters
+     *
+     * @param hypothesis  the hypothesis representing the model used
+     * @param trainingSet the training set used to fit the parameters
+     * @param alpha       the learning rate alpha used to define how big the descent steps are
+     */
     public static void batchGradientDescent(Hypothesis hypothesis, TrainingSet trainingSet, double alpha) {
         // set initial random weights
         double[] parameters = initializeRandomWeights(trainingSet.iterator().next().getInputs().length);
