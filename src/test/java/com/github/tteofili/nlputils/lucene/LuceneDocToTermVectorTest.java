@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.lucene;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.MockAnalyzer;
@@ -19,8 +19,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.tteofili.nlputils.lucene.LuceneDocToTermVector;
+
 /**
- * Testcase for {@link LuceneDocToTermVector}
+ * Testcase for {@link com.github.tteofili.nlputils.lucene.LuceneDocToTermVector}
  */
 public class LuceneDocToTermVectorTest extends LuceneTestCase {
 

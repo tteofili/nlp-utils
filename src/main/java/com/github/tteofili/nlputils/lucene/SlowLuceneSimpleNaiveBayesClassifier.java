@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.lucene;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -19,8 +19,10 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 
+import com.github.tteofili.nlputils.NaiveBayesClassifier;
+
 /**
- * A Lucene based {@link NaiveBayesClassifier}
+ * A Lucene based {@link com.github.tteofili.nlputils.NaiveBayesClassifier}
  */
 public class SlowLuceneSimpleNaiveBayesClassifier implements NaiveBayesClassifier<String, String> {
 

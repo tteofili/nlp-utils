@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.lucene;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;

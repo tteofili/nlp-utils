@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.lucene;
 
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
@@ -12,6 +12,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Test;
+
+import com.github.tteofili.nlputils.lucene.SlowLuceneSimpleNaiveBayesClassifier;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
