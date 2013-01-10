@@ -1,5 +1,7 @@
 package com.github.tteofili.nlputils.lucene;
 
+import java.util.Arrays;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.MockAnalyzer;
 import org.apache.lucene.document.Document;
@@ -68,14 +70,27 @@ public class LuceneDocToTermVectorTest extends LuceneTestCase {
 
   @Test
   public void testDenseFreqDoubleArrayConversion() throws Exception {
-    Terms fieldTerms = MultiFields.getTerms(index, "text");
     IndexSearcher indexSearcher = new IndexSearcher(index);
     for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
       Terms docTerms = index.getTermVector(scoreDoc.doc, "text");
-      Double[] vector = LuceneDocToTermVector.toDenseFreqDoubleArray(docTerms, fieldTerms);
+      Double[] vector = LuceneDocToTermVector.toDenseFreqDoubleArray(docTerms);
       assertNotNull(vector);
       assertTrue(vector.length > 0);
     }
+  }
 
+  @Test
+  public void testSparseFreqDoubleArrayConversion() throws Exception {
+    Terms fieldTerms = MultiFields.getTerms(index, "text");
+    IndexSearcher indexSearcher = new IndexSearcher(index);
+    int i = 1;
+    for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
+      Terms docTerms = index.getTermVector(scoreDoc.doc, "text");
+      Double[] vector = LuceneDocToTermVector.toSparseFreqDoubleArray(docTerms, fieldTerms);
+      System.err.println(Arrays.toString(vector) +" > "+i);
+      assertNotNull(vector);
+      assertTrue(vector.length > 0);
+      i++;
+    }
   }
 }
