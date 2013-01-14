@@ -21,8 +21,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.tteofili.nlputils.lucene.LuceneDocToTermVector;
-
 /**
  * Testcase for {@link com.github.tteofili.nlputils.lucene.LuceneDocToTermVector}
  */
@@ -49,7 +47,7 @@ public class LuceneDocToTermVectorTest extends LuceneTestCase {
     for (int i = 0; i < 100; i++) {
       doc = new Document();
       doc.add(new Field("id", Integer.toString(i), ft));
-      doc.add(new Field("text", String.valueOf(i % 31) + " " + String.valueOf(i % 32) + " " + String.valueOf(i % 33), ft));
+      doc.add(new Field("text", random().nextInt(10) + " " + random().nextInt(10) + " " + random().nextInt(10), ft));
       indexWriter.addDocument(doc, analyzer);
     }
 
@@ -73,7 +71,7 @@ public class LuceneDocToTermVectorTest extends LuceneTestCase {
     IndexSearcher indexSearcher = new IndexSearcher(index);
     for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
       Terms docTerms = index.getTermVector(scoreDoc.doc, "text");
-      Double[] vector = LuceneDocToTermVector.toDenseFreqDoubleArray(docTerms);
+      Double[] vector = LuceneDocToTermVector.toDenseLocalFreqDoubleArray(docTerms);
       assertNotNull(vector);
       assertTrue(vector.length > 0);
     }
@@ -86,7 +84,8 @@ public class LuceneDocToTermVectorTest extends LuceneTestCase {
     int i = 1;
     for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
       Terms docTerms = index.getTermVector(scoreDoc.doc, "text");
-      Double[] vector = LuceneDocToTermVector.toSparseFreqDoubleArray(docTerms, fieldTerms);
+      System.err.println(index.document(scoreDoc.doc).getField("text").stringValue());
+      Double[] vector = LuceneDocToTermVector.toSparseLocalFreqDoubleArray(docTerms, fieldTerms);
       System.err.println(Arrays.toString(vector) +" > "+i);
       assertNotNull(vector);
       assertTrue(vector.length > 0);
