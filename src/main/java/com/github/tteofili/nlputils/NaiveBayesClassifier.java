@@ -5,5 +5,5 @@ package com.github.tteofili.nlputils;
  */
 public interface NaiveBayesClassifier<I, O> {
 
-    public O calculateClass(I inputDocument) throws Exception;
+  public O calculateClass(I inputDocument) throws Exception;
 }

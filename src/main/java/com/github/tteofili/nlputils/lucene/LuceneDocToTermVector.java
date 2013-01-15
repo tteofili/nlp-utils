@@ -22,22 +22,22 @@ public class LuceneDocToTermVector {
       TermsEnum docTermsEnum = docTerms.iterator(null);
       BytesRef term;
       while ((term = fieldTermsEnum.next()) != null) {
-          boolean found = false;
-          BytesRef cdt;
-          while ((cdt = docTermsEnum.next())!=null) {
-              if (cdt.bytesEquals(term)) {
-                  long termFreqLocal = docTermsEnum.totalTermFreq(); // the total number of occurrences of this term in the given document
-                  freqVector[i] = Long.valueOf(termFreqLocal).doubleValue();
-                  found = true;
-                  break;
-              }
+        boolean found = false;
+        BytesRef cdt;
+        while ((cdt = docTermsEnum.next()) != null) {
+          if (cdt.bytesEquals(term)) {
+            long termFreqLocal = docTermsEnum.totalTermFreq(); // the total number of occurrences of this term in the given document
+            freqVector[i] = Long.valueOf(termFreqLocal).doubleValue();
+            found = true;
+            break;
           }
-          if (!found) {
-              freqVector[i] = 0d;
-          }
-          docTermsEnum = docTerms.iterator(docTermsEnum);
+        }
+        if (!found) {
+          freqVector[i] = 0d;
+        }
+        docTermsEnum = docTerms.iterator(docTermsEnum);
 
-          i++;
+        i++;
       }
     }
     return freqVector;
@@ -47,16 +47,16 @@ public class LuceneDocToTermVector {
 
     Double[] freqVector = null;
     if (docTerms != null) {
-        freqVector = new Double[(int) docTerms.size()];
-        int i = 0;
-        TermsEnum docTermsEnum = docTerms.iterator(null);
+      freqVector = new Double[(int) docTerms.size()];
+      int i = 0;
+      TermsEnum docTermsEnum = docTerms.iterator(null);
 
-        while (docTermsEnum.next() != null) {
-            long termFreqLocal = docTermsEnum.totalTermFreq(); // the total number of occurrences of this term in the given document
-            freqVector[i] = Long.valueOf(termFreqLocal).doubleValue();
-            i++;
-        }
+      while (docTermsEnum.next() != null) {
+        long termFreqLocal = docTermsEnum.totalTermFreq(); // the total number of occurrences of this term in the given document
+        freqVector[i] = Long.valueOf(termFreqLocal).doubleValue();
+        i++;
+      }
     }
     return freqVector;
-}
+  }
 }

@@ -7,11 +7,11 @@ import org.junit.Test;
  */
 public class GradientDescentUtilsTest {
 
-    @Test
-    public void testConvergence() throws Exception {
-        TrainingSet trainingSet = new TrainingSet();
-        TestUtils.fillTrainingSet(trainingSet, 100, 5);
-        GradientDescentUtils.batchGradientDescent(new LinearCombinationHypothesis(), trainingSet, 0.00002);
-    }
+  @Test
+  public void testConvergence() throws Exception {
+    TrainingSet trainingSet = new TrainingSet();
+    TestUtils.fillTrainingSet(trainingSet, 100, 5);
+    GradientDescentUtils.batchGradientDescent(new LinearCombinationHypothesis(), trainingSet, 0.00002);
+  }
 
 }

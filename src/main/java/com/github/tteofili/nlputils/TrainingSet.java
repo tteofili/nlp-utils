@@ -9,18 +9,18 @@ import java.util.Iterator;
  */
 public class TrainingSet implements Iterable<TrainingExample> {
 
-    private Collection<TrainingExample> trainingExamples = new HashSet<TrainingExample>();
+  private Collection<TrainingExample> trainingExamples = new HashSet<TrainingExample>();
 
-    @Override
-    public Iterator<TrainingExample> iterator() {
-        return trainingExamples.iterator();
-    }
+  @Override
+  public Iterator<TrainingExample> iterator() {
+    return trainingExamples.iterator();
+  }
 
-    public void add(TrainingExample trainingExample) {
-        trainingExamples.add(trainingExample);
-    }
+  public void add(TrainingExample trainingExample) {
+    trainingExamples.add(trainingExample);
+  }
 
-    public int size() {
-        return trainingExamples.size();
-    }
+  public int size() {
+    return trainingExamples.size();
+  }
 }
