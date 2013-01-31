@@ -20,6 +20,6 @@ public class AnomalyDetectionUtilsTest {
     TrainingExample newInput = new TrainingExample(new double[]{1d, 2d, 1000d, 123d, 0.1d}, 0d);
     double probability = AnomalyDetectionUtils.getGaussianProbability(newInput, mus, sigmas);
     assertTrue("negative probability " + probability, 0 <= probability);
-    assertTrue("probability bigger than 1 " + probability, 1 > probability);
+    assertTrue("probability bigger than 1 " + probability, 1 >= probability);
   }
 }
