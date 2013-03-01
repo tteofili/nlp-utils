@@ -8,13 +8,13 @@ import java.util.Collection;
  */
 public interface LanguageModel<T> {
 
-    /**
-     * Calculate the probability of a sentence given a vocabulary
-     *
-     * @param vocabulary a {@link Collection} of objects of type <code>T</code>
-     * @param sample     the sample to evaluate the probability for
-     * @return a <code>double</code> between <code>0</code> and <code>1</code>
-     */
-    public double calculateProbability(Collection<T> vocabulary, T sample);
+  /**
+   * Calculate the probability of a sentence given a vocabulary
+   *
+   * @param vocabulary a {@link Collection} of objects of type <code>T</code>
+   * @param sample     the sample to evaluate the probability for
+   * @return a <code>double</code> between <code>0</code> and <code>1</code>
+   */
+  public double calculateProbability(Collection<T> vocabulary, T sample);
 
 }
