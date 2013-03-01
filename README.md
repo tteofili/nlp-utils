@@ -5,3 +5,5 @@ currently providing tools for:
 * ngram
 * naive bayes
 * gradient descent / regression
+* anomaly detection
+* language modeling
