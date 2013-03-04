@@ -7,6 +7,28 @@ import java.util.Collection;
  */
 public class NGramUtils {
 
+  private static Double count(String x0, String x1, String x2, Collection<String[]> sentences) {
+    Double count = 0d;
+    for (String[] sentence : sentences) {
+      int idx0 = contains(sentence, x0);
+      if (idx0 >= 0) {
+        if (idx0 + 2 < sentence.length && x1.equals(sentence[idx0+1]) && x2.equals(sentence[idx0+2])) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  private static int contains(String[] sentence, String word) {
+    for (int i = 0; i < sentence.length; i++) {
+      if (word.equals(sentence[i])){
+        return i;
+      }
+    }
+    return -1;
+  }
+
   private static Double count(String sequentWord, String precedingWord, Collection<String[]> set) {
     Double result = 0d;
     boolean foundPreceding = false;
@@ -44,6 +66,10 @@ public class NGramUtils {
 
   public static Double calculateBigramProbability(String sequentWord, String precedingWord, Collection<String[]> set) {
     return count(sequentWord, precedingWord, set)/ count(precedingWord, set);
+  }
+
+  public static Double calculateTrigramMLProbability(String x0, String x1, String x2, Collection<String[]> sentences) {
+    return count(x0, x1, x2, sentences)/ count(x0,x1, sentences);
   }
 
   public static Double calculateBigramPriorSmoothingProbability(String sequentWord, String precedingWord, Collection<String[]> set, Double k) {
