@@ -27,4 +27,18 @@ public class NGramUtilsTest {
     d = NGramUtils.calculateBigramProbability("Sam","<s>",set);
     assertEquals(Double.valueOf(0.3333333333333333d),d);
   }
+
+  @Test
+  public void testTrigram() {
+    Collection<String[]> set = new LinkedList<String[]>();
+    set.add(new String[]{"<s>","I","am","Sam","</s>"});
+    set.add(new String[]{"<s>","Sam","I","am","</s>"});
+    set.add(new String[]{"<s>","I","do","not","like","green","eggs","and","ham","</s>"});
+    set.add(new String[]{});
+    Double d = NGramUtils.calculateTrigramMLProbability("I", "am", "Sam",set);
+    assertTrue(d>0);
+    assertEquals(Double.valueOf(0.5),d);
+    d = NGramUtils.calculateTrigramMLProbability("Sam","I", "am", set);
+    assertEquals(Double.valueOf(1d),d);
+  }
 }

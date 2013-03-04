@@ -69,7 +69,7 @@ public class NGramUtils {
   }
 
   public static Double calculateTrigramMLProbability(String x0, String x1, String x2, Collection<String[]> sentences) {
-    return count(x0, x1, x2, sentences)/ count(x0,x1, sentences);
+    return count(x0, x1, x2, sentences)/ count(x1, x0, sentences);
   }
 
   public static Double calculateBigramPriorSmoothingProbability(String sequentWord, String precedingWord, Collection<String[]> set, Double k) {
