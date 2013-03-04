@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A simple trigram sentence model for sentences made of <code>String</code> arrays
+ * A simple trigram language model for sentences made of <code>String</code> arrays
  */
 public class TrigramSentenceLanguageModel implements LanguageModel<String[]> {
   @Override
