@@ -76,8 +76,12 @@ public class NGramUtils {
     return (count(sequentWord, precedingWord, set) + k * calculateProbability(sequentWord, set)) / (count(precedingWord, set) + k * set.size());
   }
 
-  private static Double calculateProbability(String word, Collection<String[]> set) {
-    return count(word, set) / set.size();
+  public static Double calculateProbability(String word, Collection<String[]> set) {
+    double vocSize = 0d;
+    for (String[] s : set) {
+        vocSize+= s.length;
+    }
+    return count(word, set) / vocSize;
   }
 
 
