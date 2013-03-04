@@ -28,6 +28,7 @@ public class LucenePerceptronClassifier implements Classifier<BytesRef> {
   private Terms textTerms;
   private Analyzer analyzer;
   private String textFieldName;
+  private Terms classTerms;
 
   @Override
   public ClassificationResult<BytesRef> assignClass(String text) throws IOException {
@@ -50,6 +51,7 @@ public class LucenePerceptronClassifier implements Classifier<BytesRef> {
   @Override
   public void train(AtomicReader atomicReader, String textFieldName, String classFieldName, Analyzer analyzer) throws IOException {
     textTerms = MultiFields.getTerms(atomicReader, textFieldName);
+    classTerms = textTerms = MultiFields.getTerms(atomicReader, classFieldName);
     this.analyzer = analyzer;
     this.textFieldName = textFieldName;
 
