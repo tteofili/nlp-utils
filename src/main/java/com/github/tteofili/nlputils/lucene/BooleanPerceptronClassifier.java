@@ -27,14 +27,14 @@ import org.apache.lucene.util.BytesRef;
  */
 public class BooleanPerceptronClassifier implements Classifier<Boolean> {
 
-  private Map<String, Double> weights = new HashMap<String, Double>();
+  private final Map<String, Double> weights = new HashMap<String, Double>();
+  private final Double threshold;
   private Terms textTerms;
   private Analyzer analyzer;
   private String textFieldName;
-  private Double threshohld;
 
-  public BooleanPerceptronClassifier(Double threshohld) {
-    this.threshohld = threshohld;
+  public BooleanPerceptronClassifier(Double threshold) {
+    this.threshold = threshold;
   }
 
   public BooleanPerceptronClassifier() {
@@ -44,7 +44,7 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
   @Override
   public ClassificationResult<Boolean> assignClass(String text) throws IOException {
     if (textTerms == null) {
-      throw new IOException("You must first call Classifier#train()");
+      throw new IOException("You must first call Classifier#train");
     }
     Double output = 0d;
     TokenStream tokenStream = analyzer.tokenStream(textFieldName, new StringReader(text));
@@ -60,7 +60,7 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
   }
 
   private Boolean getClassFromOutput(Double output) {
-    return output >= threshohld;
+    return output >= threshold;
   }
 
   @Override
