@@ -13,6 +13,7 @@ import org.apache.lucene.classification.Classifier;
 import org.apache.lucene.index.AtomicReader;
 import org.apache.lucene.index.MultiFields;
 import org.apache.lucene.index.StorableField;
+import org.apache.lucene.index.StoredDocument;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.IndexSearcher;
@@ -78,33 +79,37 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
     IndexSearcher indexSearcher = new IndexSearcher(atomicReader);
     // for each doc
     for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
-      TermsEnum cte = textTerms.iterator(reuse);
-      // get the term vectors
-      Terms terms = atomicReader.getTermVector(scoreDoc.doc, textFieldName);
+      StoredDocument doc = indexSearcher.doc(scoreDoc.doc);
 
-      TermsEnum termsEnum = terms.iterator(null);
+      // assign class to the doc
+      ClassificationResult<Boolean> classificationResult = assignClass(doc.getField(textFieldName).stringValue());
+      Boolean assignedClass = classificationResult.getAssignedClass();
 
-      BytesRef term;
-      while ((term = termsEnum.next()) != null) {
-        cte.seekExact(term, true);
-        ClassificationResult<Boolean> classificationResult = assignClass(indexSearcher.doc(scoreDoc.doc).getField(textFieldName).stringValue());
-        Boolean assignedClass = classificationResult.getAssignedClass();
-        if (assignedClass != null) {
-            StorableField field = indexSearcher.doc(scoreDoc.doc).getField(classFieldName);
-            double modifier = calculateModifier(assignedClass, Boolean.valueOf(field.stringValue()));
-          if (modifier != 0) {
-            String termString = cte.term().utf8ToString();
-            long termFreqLocal = termsEnum.totalTermFreq();
-            weights.put(termString, weights.get(termString) + modifier * termFreqLocal);
+      // get the expected result
+      StorableField field = doc.getField(classFieldName);
+
+      Boolean correctClass = Boolean.valueOf(field.stringValue());
+      double modifier = correctClass.compareTo(assignedClass);
+      if (modifier != 0) {
+          TermsEnum cte = textTerms.iterator(reuse);
+          // get the term vectors
+          Terms terms = atomicReader.getTermVector(scoreDoc.doc, textFieldName);
+
+          TermsEnum termsEnum = terms.iterator(null);
+
+          BytesRef term;
+          while ((term = termsEnum.next()) != null) {
+            cte.seekExact(term, true);
+            if (assignedClass != null) {
+
+                String termString = cte.term().utf8ToString();
+                long termFreqLocal = termsEnum.totalTermFreq();
+                weights.put(termString, weights.get(termString) + modifier * termFreqLocal);
+            }
           }
-        }
+          reuse = cte;
       }
-      reuse = cte;
     }
   }
-
-    private double calculateModifier(Boolean assignedClass, Boolean correctClass) {
-        return correctClass.compareTo(assignedClass);
-    }
 
 }

@@ -110,22 +110,22 @@ public class PerceptronClassifierTest {
 
     IndexSearcher indexSearcher = new IndexSearcher(DirectoryReader.open(indexWriter.getDirectory()));
 
-    Classifier<Boolean> classifier = new BooleanPerceptronClassifier(23d);
+    Classifier<Boolean> classifier = new BooleanPerceptronClassifier(21d);
     classifier.train(SlowCompositeReaderWrapper.wrap(indexSearcher.getIndexReader()), "text", "agency", analyzer);
 
-    ClassificationResult<Boolean> bytesRefClassificationResult = classifier.assignClass("CENTRO S.Maria Maggiore " +
+    ClassificationResult<Boolean> result = classifier.assignClass("CENTRO S.Maria Maggiore " +
               "angolo Napoleone III in palazzo epoca con portiere 110 mq ristrutt." +
               " IIp salone doppio cucina ab. 2 camere bagno ripost. balcone " +
               "perimetrale E. 730.000 tratt. ");
-    Boolean isAgency = bytesRefClassificationResult.getAssignedClass();
-    assertFalse(isAgency);
+    Boolean isAgency = result.getAssignedClass();
+    assertFalse("marked as agency with score " + result.getScore(), isAgency);
 
-    bytesRefClassificationResult = classifier.assignClass("TRASTEVERE via del Mattonato in " +
+    result = classifier.assignClass("TRASTEVERE via del Mattonato in " +
               "piccola palazzina d'epoca app.to finemente ristrutturato " +
               "ingresso salone camera cucina tinello servizio balconcino " +
               "aria condiz. e 540.000 Ag.Imm. ");
-    isAgency = bytesRefClassificationResult.getAssignedClass();
-    assertTrue(isAgency);
+    isAgency = result.getAssignedClass();
+    assertTrue("marked as not agency with score " + result.getScore(), isAgency);
 
     indexWriter.close();
   }
