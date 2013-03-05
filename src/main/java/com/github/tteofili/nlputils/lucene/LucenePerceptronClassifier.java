@@ -20,7 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A perceptron (see <code>http://en.wikipedia.org/wiki/Perceptron</code>) based {@link Classifier}
+ * A perceptron (see <code>http://en.wikipedia.org/wiki/Perceptron</code>) based {@link Classifier}.
+ * The weights and output are calculated using {@link TermsEnum#totalTermFreq}.
  */
 public class LucenePerceptronClassifier implements Classifier<BytesRef> {
 
@@ -41,23 +42,34 @@ public class LucenePerceptronClassifier implements Classifier<BytesRef> {
       CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
       Double d = weights.get(String.valueOf(charTermAttribute.buffer()));
       if (d != null && d > 0) {
-        output += d; // TODO : decide if there should be some other multiplier (e.g. local/global term/doc freq)
+        // TODO : decide if there should be some other multiplier (e.g. local/global term/doc freq) or (better) make this configurable
+        output += d;
       }
     }
-    // TODO : decide how to map perceptron output to class field values
-    return new ClassificationResult<BytesRef>(new BytesRef(), output);
+    return new ClassificationResult<BytesRef>(getClassFromOutput(), output);
   }
 
-  @Override
+    private BytesRef getClassFromOutput() {
+      // TODO : implement this
+      return null;
+    }
+
+    @Override
   public void train(AtomicReader atomicReader, String textFieldName, String classFieldName, Analyzer analyzer) throws IOException {
+    classTerms = MultiFields.getTerms(atomicReader, classFieldName);
     textTerms = MultiFields.getTerms(atomicReader, textFieldName);
     classTerms = textTerms = MultiFields.getTerms(atomicReader, classFieldName);
     this.analyzer = analyzer;
     this.textFieldName = textFieldName;
 
+    TermsEnum reuse = textTerms.iterator(null);
+    BytesRef textTerm;
+    while ((textTerm = reuse.next()) != null) {
+        weights.put(textTerm.utf8ToString(), (double) reuse.totalTermFreq());
+    }
+
     IndexSearcher indexSearcher = new IndexSearcher(atomicReader);
     // for each doc
-    TermsEnum reuse = null;
     for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
       TermsEnum cte = textTerms.iterator(reuse);
       // get the term vectors
@@ -71,24 +83,42 @@ public class LucenePerceptronClassifier implements Classifier<BytesRef> {
         ClassificationResult<BytesRef> classificationResult = assignClass(indexSearcher.doc(scoreDoc.doc).getField(textFieldName).stringValue());
         BytesRef assignedClass = classificationResult.getAssignedClass();
         if (assignedClass != null) {
-          double sign = calculateModifier(assignedClass, indexSearcher.doc(scoreDoc.doc).getField(classFieldName).binaryValue());
-          String termString = cte.term().utf8ToString();
-          long termFreqLocal = termsEnum.totalTermFreq();
+          double modifier = calculateModifier(assignedClass, indexSearcher.doc(scoreDoc.doc).getField(classFieldName).binaryValue());
+          if (modifier != 0) {
+            String termString = cte.term().utf8ToString();
+            long termFreqLocal = termsEnum.totalTermFreq();
 //          int docFreqOverall = cte.docFreq();
 //          long termFreqOverall = cte.totalTermFreq();
 //          System.err.println(termString + " : " + docFreqOverall + " - " + termFreqOverall + " - " + termFreqLocal);
-          weights.put(termString, weights.get(termString) + sign * termFreqLocal);
+            weights.put(termString, weights.get(termString) + modifier * termFreqLocal);
+          }
         }
       }
       reuse = cte;
     }
   }
 
-  private double calculateModifier(BytesRef assignedClass, BytesRef correctOutput) throws IOException {
+  private double calculateModifier(BytesRef assignedClass, BytesRef correctClass) throws IOException {
     double modifier = 0;
-    if (!assignedClass.equals(correctOutput)) {
-      // TODO : this has to be done in a different way to see if weights should be added or subtracted
+    TermsEnum iterator = classTerms.iterator(null);
+    if (!assignedClass.equals(correctClass)) {
+      BytesRef next = iterator.next();
+      long assignedOutput = 0l;
+      long correctOutput = 0l;
+      while (next != null) {
+        if (assignedClass.utf8ToString().equals(next.utf8ToString())) {
+          assignedOutput = iterator.totalTermFreq();
+        }
+        else if (correctClass.utf8ToString().equals(next.utf8ToString())) {
+          correctOutput = iterator.totalTermFreq();
+        }
 
+        if (assignedOutput > 0 && correctOutput > 0) {
+          break;
+        }
+
+      }
+      modifier = correctOutput - assignedOutput;
     }
     return modifier;
   }
