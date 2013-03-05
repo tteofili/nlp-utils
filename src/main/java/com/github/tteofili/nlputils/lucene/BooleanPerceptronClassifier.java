@@ -1,5 +1,10 @@
 package com.github.tteofili.nlputils.lucene;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -7,6 +12,7 @@ import org.apache.lucene.classification.ClassificationResult;
 import org.apache.lucene.classification.Classifier;
 import org.apache.lucene.index.AtomicReader;
 import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.StorableField;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.IndexSearcher;
@@ -14,25 +20,29 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.util.BytesRef;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * A perceptron (see <code>http://en.wikipedia.org/wiki/Perceptron</code>) based {@link Classifier}.
- * The weights and output are calculated using {@link TermsEnum#totalTermFreq}.
+ * A perceptron (see <code>http://en.wikipedia.org/wiki/Perceptron</code>) based
+ * <code>Boolean</code> {@link org.apache.lucene.classification.Classifier}.
+ * The weights are calculated using {@link org.apache.lucene.index.TermsEnum#totalTermFreq}.
  */
-public class BytesRefPerceptronClassifier implements Classifier<BytesRef> {
+public class BooleanPerceptronClassifier implements Classifier<Boolean> {
 
   private Map<String, Double> weights = new HashMap<String, Double>();
   private Terms textTerms;
   private Analyzer analyzer;
   private String textFieldName;
-  private Terms classTerms;
+  private Double threshohld;
+
+  public BooleanPerceptronClassifier(Double threshohld) {
+    this.threshohld = threshohld;
+  }
+
+  public BooleanPerceptronClassifier() {
+    this(10d);
+  }
 
   @Override
-  public ClassificationResult<BytesRef> assignClass(String text) throws IOException {
+  public ClassificationResult<Boolean> assignClass(String text) throws IOException {
     if (textTerms == null) {
       throw new IOException("You must first call Classifier#train()");
     }
@@ -40,23 +50,21 @@ public class BytesRefPerceptronClassifier implements Classifier<BytesRef> {
     TokenStream tokenStream = analyzer.tokenStream(textFieldName, new StringReader(text));
     CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
     while (tokenStream.incrementToken()) {
-      Double d = weights.get(charTermAttribute.toString());
+      String s = charTermAttribute.toString();
+      Double d = weights.get(s);
       if (d != null && d > 0) {
-        // TODO : decide if there should be some other multiplier (e.g. local/global term/doc freq) or (better) make this configurable
         output += d;
       }
     }
-    return new ClassificationResult<BytesRef>(getClassFromOutput(), output);
+    return new ClassificationResult<Boolean>(getClassFromOutput(output), output);
   }
 
-    private BytesRef getClassFromOutput() {
-      // TODO : implement this
-      return null;
-    }
+  private Boolean getClassFromOutput(Double output) {
+    return output >= threshohld;
+  }
 
-    @Override
+  @Override
   public void train(AtomicReader atomicReader, String textFieldName, String classFieldName, Analyzer analyzer) throws IOException {
-    classTerms = MultiFields.getTerms(atomicReader, classFieldName);
     textTerms = MultiFields.getTerms(atomicReader, textFieldName);
     this.analyzer = analyzer;
     this.textFieldName = textFieldName;
@@ -79,16 +87,14 @@ public class BytesRefPerceptronClassifier implements Classifier<BytesRef> {
       BytesRef term;
       while ((term = termsEnum.next()) != null) {
         cte.seekExact(term, true);
-        ClassificationResult<BytesRef> classificationResult = assignClass(indexSearcher.doc(scoreDoc.doc).getField(textFieldName).stringValue());
-        BytesRef assignedClass = classificationResult.getAssignedClass();
+        ClassificationResult<Boolean> classificationResult = assignClass(indexSearcher.doc(scoreDoc.doc).getField(textFieldName).stringValue());
+        Boolean assignedClass = classificationResult.getAssignedClass();
         if (assignedClass != null) {
-          double modifier = calculateModifier(assignedClass, indexSearcher.doc(scoreDoc.doc).getField(classFieldName).binaryValue());
+            StorableField field = indexSearcher.doc(scoreDoc.doc).getField(classFieldName);
+            double modifier = calculateModifier(assignedClass, Boolean.valueOf(field.stringValue()));
           if (modifier != 0) {
             String termString = cte.term().utf8ToString();
             long termFreqLocal = termsEnum.totalTermFreq();
-//          int docFreqOverall = cte.docFreq();
-//          long termFreqOverall = cte.totalTermFreq();
-//          System.err.println(termString + " : " + docFreqOverall + " - " + termFreqOverall + " - " + termFreqLocal);
             weights.put(termString, weights.get(termString) + modifier * termFreqLocal);
           }
         }
@@ -97,28 +103,8 @@ public class BytesRefPerceptronClassifier implements Classifier<BytesRef> {
     }
   }
 
-  private double calculateModifier(BytesRef assignedClass, BytesRef correctClass) throws IOException {
-    double modifier = 0;
-    TermsEnum iterator = classTerms.iterator(null);
-    if (!assignedClass.equals(correctClass)) {
-      BytesRef next = iterator.next();
-      long assignedOutput = 0l;
-      long correctOutput = 0l;
-      while (next != null) {
-        if (assignedClass.utf8ToString().equals(next.utf8ToString())) {
-          assignedOutput = iterator.totalTermFreq();
-        }
-        else if (correctClass.utf8ToString().equals(next.utf8ToString())) {
-          correctOutput = iterator.totalTermFreq();
-        }
-
-        if (assignedOutput > 0 && correctOutput > 0) {
-          break;
-        }
-
-      }
-      modifier = correctOutput - assignedOutput;
+    private double calculateModifier(Boolean assignedClass, Boolean correctClass) {
+        return correctClass.compareTo(assignedClass);
     }
-    return modifier;
-  }
+
 }
