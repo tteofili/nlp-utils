@@ -109,7 +109,7 @@ public class PerceptronClassifierTest {
 
     IndexSearcher indexSearcher = new IndexSearcher(DirectoryReader.open(indexWriter.getDirectory()));
 
-    LucenePerceptronClassifier classifier = new LucenePerceptronClassifier();
+    BytesRefPerceptronClassifier classifier = new BytesRefPerceptronClassifier();
     classifier.train(SlowCompositeReaderWrapper.wrap(indexSearcher.getIndexReader()), "text", "class", analyzer);
 
     ClassificationResult<BytesRef> bytesRefClassificationResult = classifier.assignClass("CENTRO S.Maria Maggiore " +

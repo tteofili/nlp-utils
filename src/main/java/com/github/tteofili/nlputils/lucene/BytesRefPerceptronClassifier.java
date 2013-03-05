@@ -23,7 +23,7 @@ import java.util.Map;
  * A perceptron (see <code>http://en.wikipedia.org/wiki/Perceptron</code>) based {@link Classifier}.
  * The weights and output are calculated using {@link TermsEnum#totalTermFreq}.
  */
-public class LucenePerceptronClassifier implements Classifier<BytesRef> {
+public class BytesRefPerceptronClassifier implements Classifier<BytesRef> {
 
   private Map<String, Double> weights = new HashMap<String, Double>();
   private Terms textTerms;
