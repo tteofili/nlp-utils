@@ -24,7 +24,8 @@ import org.apache.lucene.util.BytesRef;
 /**
  * A perceptron (see <code>http://en.wikipedia.org/wiki/Perceptron</code>) based
  * <code>Boolean</code> {@link org.apache.lucene.classification.Classifier}.
- * The weights are calculated using {@link org.apache.lucene.index.TermsEnum#totalTermFreq}.
+ * The weights are calculated using {@link org.apache.lucene.index.TermsEnum#totalTermFreq}
+ * both on a per field and a per document basis.
  */
 public class BooleanPerceptronClassifier implements Classifier<Boolean> {
 
@@ -57,11 +58,7 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
         output += d;
       }
     }
-    return new ClassificationResult<Boolean>(getClassFromOutput(output), output);
-  }
-
-  private Boolean getClassFromOutput(Double output) {
-    return output >= threshold;
+    return new ClassificationResult<Boolean>(output >= threshold, output);
   }
 
   @Override
@@ -101,7 +98,6 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
           while ((term = termsEnum.next()) != null) {
             cte.seekExact(term, true);
             if (assignedClass != null) {
-
                 String termString = cte.term().utf8ToString();
                 long termFreqLocal = termsEnum.totalTermFreq();
                 weights.put(termString, weights.get(termString) + modifier * termFreqLocal);
