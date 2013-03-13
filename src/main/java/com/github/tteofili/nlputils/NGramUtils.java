@@ -64,7 +64,7 @@ public class NGramUtils {
     return (count(sequentWord, precedingWord, set) + k) / (count(precedingWord, set) + k * set.size());
   }
 
-  public static Double calculateBigramProbability(String sequentWord, String precedingWord, Collection<String[]> set) {
+  public static Double calculateBigramMLProbability(String sequentWord, String precedingWord, Collection<String[]> set) {
     return count(sequentWord, precedingWord, set)/ count(precedingWord, set);
   }
 
@@ -73,15 +73,25 @@ public class NGramUtils {
   }
 
   public static Double calculateBigramPriorSmoothingProbability(String sequentWord, String precedingWord, Collection<String[]> set, Double k) {
-    return (count(sequentWord, precedingWord, set) + k * calculateProbability(sequentWord, set)) / (count(precedingWord, set) + k * set.size());
+    return (count(sequentWord, precedingWord, set) + k * calculateUnigramMLProbability(sequentWord, set)) / (count(precedingWord, set) + k * set.size());
   }
 
-  public static Double calculateProbability(String word, Collection<String[]> set) {
+  public static Double calculateUnigramMLProbability(String word, Collection<String[]> set) {
     double vocSize = 0d;
     for (String[] s : set) {
         vocSize+= s.length;
     }
     return count(word, set) / vocSize;
+  }
+
+  public static Double calculateLinearInterpolationProbability(String x0, String x1, String x2, Collection<String[]> sentences,
+                                                               Double lambda1, Double lambda2, Double lambda3) {
+      assert lambda1 + lambda2 + lambda3 == 1 : "lambdas sum should be equals to 1";
+
+      return  lambda1 * calculateTrigramMLProbability(x0, x1, x2, sentences) +
+              lambda2 * calculateBigramMLProbability(x2, x1, sentences) +
+              lambda3 * calculateUnigramMLProbability(x2, sentences);
+
   }
 
 

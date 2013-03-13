@@ -17,10 +17,10 @@ public class TrigramSentenceLanguageModel implements LanguageModel<String[]> {
         probability *= NGramUtils.calculateTrigramMLProbability(trigram.getX0(), trigram.getX1(), trigram.getX2(), vocabulary);
       } else if (trigram.getX0() == null && trigram.getX1() != null) {
         // bigram
-        probability *= NGramUtils.calculateBigramProbability(trigram.getX2(), trigram.getX1(), vocabulary);
+        probability *= NGramUtils.calculateBigramMLProbability(trigram.getX2(), trigram.getX1(), vocabulary);
       } else if (trigram.getX0() == null && trigram.getX1() == null) {
         // unigram
-        probability *= NGramUtils.calculateProbability(trigram.getX2(), vocabulary);
+        probability *= NGramUtils.calculateUnigramMLProbability(trigram.getX2(), vocabulary);
       } else {
         // unexpected
       }
