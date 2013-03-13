@@ -54,7 +54,7 @@ public class NGramUtilsTest {
     Double d = NGramUtils.calculateLinearInterpolationProbability("the", "green", "book", set, lambda, lambda, lambda);
     assertNotNull(d);
     assertTrue(d > 0);
-    assertEquals(0.5714285714285714d, d.doubleValue());
+    assertEquals("", Double.valueOf(0.5714285714285714d), d);
   }
 
 }
