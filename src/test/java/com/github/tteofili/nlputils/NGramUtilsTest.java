@@ -57,5 +57,4 @@ public class NGramUtilsTest {
     assertEquals(0.5714285714285714d, d.doubleValue());
   }
 
-
 }

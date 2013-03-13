@@ -1,6 +1,8 @@
 package com.github.tteofili.nlputils;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * utility class for calculating probabilities of bi/uni-grams
@@ -79,21 +81,37 @@ public class NGramUtils {
   public static Double calculateUnigramMLProbability(String word, Collection<String[]> set) {
     double vocSize = 0d;
     for (String[] s : set) {
-        vocSize+= s.length;
+      vocSize+= s.length;
     }
     return count(word, set) / vocSize;
   }
 
   public static Double calculateLinearInterpolationProbability(String x0, String x1, String x2, Collection<String[]> sentences,
                                                                Double lambda1, Double lambda2, Double lambda3) {
-      assert lambda1 + lambda2 + lambda3 == 1 : "lambdas sum should be equals to 1";
-      assert lambda1 > 0 && lambda2 > 0 && lambda3 > 0 : "lambdas should be greater than 0";
+    assert lambda1 + lambda2 + lambda3 == 1 : "lambdas sum should be equals to 1";
+    assert lambda1 > 0 && lambda2 > 0 && lambda3 > 0 : "lambdas should be greater than 0";
 
-      return  lambda1 * calculateTrigramMLProbability(x0, x1, x2, sentences) +
-              lambda2 * calculateBigramMLProbability(x2, x1, sentences) +
-              lambda3 * calculateUnigramMLProbability(x2, sentences);
+    return  lambda1 * calculateTrigramMLProbability(x0, x1, x2, sentences) +
+            lambda2 * calculateBigramMLProbability(x2, x1, sentences) +
+            lambda3 * calculateUnigramMLProbability(x2, sentences);
 
   }
 
+  private static Collection<String> flatSet(Collection<String[]> set) {
+    Collection<String> flatSet = new HashSet<String>();
+    for (String[] sentence : set){
+      flatSet.addAll(Arrays.asList(sentence));
+    }
+    return flatSet;
+  }
+
+  public static Double calculateMissingProbabilityMass(String x1, Double discount, Collection<String[]> set) {
+    Double missingMass = 0d;
+    Double countWord = count(x1, set);
+    for (String word : flatSet(set)) {
+      missingMass += (count(word, x1, set) - discount)/ countWord;
+    }
+    return 1 - missingMass;
+  }
 
 }
