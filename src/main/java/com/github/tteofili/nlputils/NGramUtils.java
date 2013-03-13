@@ -87,6 +87,7 @@ public class NGramUtils {
   public static Double calculateLinearInterpolationProbability(String x0, String x1, String x2, Collection<String[]> sentences,
                                                                Double lambda1, Double lambda2, Double lambda3) {
       assert lambda1 + lambda2 + lambda3 == 1 : "lambdas sum should be equals to 1";
+      assert lambda1 > 0 && lambda2 > 0 && lambda3 > 0 : "lambdas should be greater than 0";
 
       return  lambda1 * calculateTrigramMLProbability(x0, x1, x2, sentences) +
               lambda2 * calculateBigramMLProbability(x2, x1, sentences) +
