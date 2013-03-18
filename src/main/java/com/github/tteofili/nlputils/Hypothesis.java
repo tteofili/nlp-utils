@@ -1,7 +1,7 @@
 package com.github.tteofili.nlputils;
 
 /**
- * An {@link Hypothesis} maps a series of inputs in an output
+ * An {@link Hypothesis} maps a series of inputs to an output
  */
 public interface Hypothesis {
 
