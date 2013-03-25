@@ -57,4 +57,16 @@ public class NGramUtilsTest {
     assertEquals("wrong result", Double.valueOf(0.5714285714285714d), d);
   }
 
+  @Test
+  public void testLinearInterpolation2() throws Exception {
+    Collection<String[]> set = new LinkedList<String[]>();
+    set.add(new String[]{"D","N","V","STOP"});
+    set.add(new String[]{"D","N","V","STOP"});
+    Double lambda = 1d/3d;
+    Double d = NGramUtils.calculateLinearInterpolationProbability("N", "V", "STOP", set, lambda, lambda, lambda);
+    assertNotNull(d);
+    assertTrue(d > 0);
+    assertEquals("wrong result", Double.valueOf(0.75d), d);
+  }
+
 }
