@@ -12,11 +12,11 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.classification.ClassificationResult;
 import org.apache.lucene.classification.Classifier;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.AtomicReader;
 import org.apache.lucene.index.BinaryDocValues;
+import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.MultiFields;
-import org.apache.lucene.index.StorableField;
-import org.apache.lucene.index.StoredDocument;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.IndexSearcher;
@@ -131,14 +131,14 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
         } else {
             // do a *:* search and use stored field values
             for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
-                StoredDocument doc = indexSearcher.doc(scoreDoc.doc);
+                Document doc = indexSearcher.doc(scoreDoc.doc);
 
                 // assign class to the doc
                 ClassificationResult<Boolean> classificationResult = assignClass(doc.getField(textFieldName).stringValue());
                 Boolean assignedClass = classificationResult.getAssignedClass();
 
                 // get the expected result
-                StorableField field = doc.getField(classFieldName);
+                IndexableField field = doc.getField(classFieldName);
 
                 Boolean correctClass = Boolean.valueOf(field.stringValue());
                 long modifier = correctClass.compareTo(assignedClass);

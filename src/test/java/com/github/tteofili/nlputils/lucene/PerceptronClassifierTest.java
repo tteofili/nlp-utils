@@ -29,8 +29,8 @@ public class PerceptronClassifierTest {
   public void ppsIntegrationTest() throws Exception {
 
     Directory dir = new RAMDirectory();
-    WhitespaceAnalyzer analyzer = new WhitespaceAnalyzer(Version.LUCENE_50);
-    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_50, analyzer);
+    WhitespaceAnalyzer analyzer = new WhitespaceAnalyzer(Version.LUCENE_42);
+    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_42, analyzer);
     IndexWriter indexWriter = new IndexWriter(dir, conf);
 
     FieldType type = new FieldType();
