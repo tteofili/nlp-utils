@@ -150,6 +150,11 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
     // get the doc term vectors
     Terms terms = atomicReader.getTermVector(docId, textFieldName);
 
+    if (terms == null) {
+      throw new IOException(new StringBuilder("term vectors must be stored for field ")
+          .append(textFieldName).toString());
+    }
+
     TermsEnum termsEnum = terms.iterator(null);
 
     BytesRef term;
