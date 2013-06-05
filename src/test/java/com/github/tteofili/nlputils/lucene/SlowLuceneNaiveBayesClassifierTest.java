@@ -13,8 +13,6 @@ import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Test;
 
-import com.github.tteofili.nlputils.lucene.SlowLuceneSimpleNaiveBayesClassifier;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -27,8 +25,8 @@ public class SlowLuceneNaiveBayesClassifierTest {
   public void ppsIntegrationTest() throws Exception {
 
     Directory dir = new RAMDirectory();
-    WhitespaceAnalyzer analyzer = new WhitespaceAnalyzer(Version.LUCENE_40);
-    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_40, analyzer);
+    WhitespaceAnalyzer analyzer = new WhitespaceAnalyzer(Version.LUCENE_43);
+    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_43, analyzer);
     IndexWriter indexWriter = new IndexWriter(dir, conf);
 
     FieldType type = new FieldType();
