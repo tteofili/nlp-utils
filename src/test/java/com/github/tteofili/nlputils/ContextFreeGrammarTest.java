@@ -31,6 +31,9 @@ public class ContextFreeGrammarTest {
         nonTerminals.add("NN");
         nonTerminals.add("IN");
         nonTerminals.add("PN");
+        nonTerminals.add("CJ");
+        nonTerminals.add("DJ");
+        nonTerminals.add("P");
 
         String startSymbol = "S";
 
@@ -49,9 +52,14 @@ public class ContextFreeGrammarTest {
         terminals.add("tigro");
         terminals.add("michele");
         terminals.add("scarlett");
+        terminals.add("and");
+        terminals.add("but");
+        terminals.add("while");
 
         Set<Rule> rules = new HashSet<Rule>();
         rules.add(new Rule("S", "NP", "VP"));
+        rules.add(new Rule("P", "S", "CJ", "S"));
+        rules.add(new Rule("P", "S", "DJ", "S"));
         rules.add(new Rule("VP", "Vi"));
         rules.add(new Rule("VP", "Vt", "NP"));
         rules.add(new Rule("VP", "VP", "PP"));
@@ -73,13 +81,30 @@ public class ContextFreeGrammarTest {
         rules.add(new Rule("PN", "tigro"));
         rules.add(new Rule("PN", "michele"));
         rules.add(new Rule("PN", "scarlett"));
+        rules.add(new Rule("CJ", "and"));
+        rules.add(new Rule("DJ", "but"));
+        rules.add(new Rule("DJ", "while"));
 
         contextFreeGrammar = new ContextFreeGrammar(nonTerminals, terminals, rules, startSymbol);
     }
 
     @Test
-    public void testExpansion() throws Exception {
+    public void testSingleExpansion() throws Exception {
         String[] expansion = contextFreeGrammar.leftMostDerivation("S");
+        checkExpansion(expansion);
+    }
+
+
+    @Test
+    public void testMultipleSentencesExpansion() throws Exception {
+        String[] expansion = contextFreeGrammar.leftMostDerivation("S", "CJ", "S");
+        checkExpansion(expansion);
+
+        expansion = contextFreeGrammar.leftMostDerivation("S", "DJ", "S", "CJ", "P");
+        checkExpansion(expansion);
+    }
+
+    private void checkExpansion(String[] expansion) {
         assertNotNull(expansion);
         assertTrue(expansion.length > 0);
         System.err.println(Arrays.toString(expansion));
