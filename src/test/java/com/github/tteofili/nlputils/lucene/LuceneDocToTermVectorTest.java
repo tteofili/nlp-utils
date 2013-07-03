@@ -1,7 +1,5 @@
 package com.github.tteofili.nlputils.lucene;
 
-import java.util.Arrays;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.MockAnalyzer;
 import org.apache.lucene.document.Document;
@@ -84,9 +82,7 @@ public class LuceneDocToTermVectorTest extends LuceneTestCase {
     int i = 1;
     for (ScoreDoc scoreDoc : indexSearcher.search(new MatchAllDocsQuery(), Integer.MAX_VALUE).scoreDocs) {
       Terms docTerms = index.getTermVector(scoreDoc.doc, "text");
-      System.err.println(index.document(scoreDoc.doc).getField("text").stringValue());
       Double[] vector = LuceneDocToTermVector.toSparseLocalFreqDoubleArray(docTerms, fieldTerms);
-      System.err.println(Arrays.toString(vector) +" > "+i);
       assertNotNull(vector);
       assertTrue(vector.length > 0);
       i++;
