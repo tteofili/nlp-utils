@@ -8,29 +8,30 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <lucene.version>4.3.1</lucene.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-test-framework</artifactId>
-      <version>4.2.1</version>
+      <version>${lucene.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
-      <version>4.2.1</version>
+      <version>${lucene.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-classification</artifactId>
-      <version>4.2.1</version>
+      <version>${lucene.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers-common</artifactId>
-      <version>4.2.1</version>
+      <version>${lucene.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
