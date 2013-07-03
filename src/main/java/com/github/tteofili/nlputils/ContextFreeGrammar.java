@@ -30,8 +30,8 @@ public class ContextFreeGrammar {
 
         assert words.length > 0 && startSymbol.equals(words[0]);
 
-        for (int i = 0; i < words.length; i++) {
-            expansion.addAll(getTerminals(words[i]));
+        for (String word : words) {
+            expansion.addAll(getTerminals(word));
         }
         return expansion.toArray(new String[expansion.size()]);
 
