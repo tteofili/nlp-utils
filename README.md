@@ -7,3 +7,4 @@ currently providing tools for:
 * gradient descent / regression
 * anomaly detection
 * language modeling
+* CFG
