@@ -1,12 +1,24 @@
 package com.github.tteofili.nlputils.lucene;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.classification.ClassificationResult;
 import org.apache.lucene.classification.Classifier;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.*;
+import org.apache.lucene.index.AtomicReader;
+import org.apache.lucene.index.BinaryDocValues;
+import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.Terms;
+import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.ScoreDoc;
@@ -16,13 +28,6 @@ import org.apache.lucene.util.fst.Builder;
 import org.apache.lucene.util.fst.FST;
 import org.apache.lucene.util.fst.PositiveIntOutputs;
 import org.apache.lucene.util.fst.Util;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * A perceptron (see <code>http://en.wikipedia.org/wiki/Perceptron</code>) based
@@ -151,8 +156,7 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
     Terms terms = atomicReader.getTermVector(docId, textFieldName);
 
     if (terms == null) {
-      throw new IOException(new StringBuilder("term vectors must be stored for field ")
-          .append(textFieldName).toString());
+      throw new IOException("term vectors must be stored for field " + textFieldName);
     }
 
     TermsEnum termsEnum = terms.iterator(null);
@@ -167,6 +171,7 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
         long termFreqLocal = termsEnum.totalTermFreq();
         // update weights
         Long previousValue = Util.get(fst, term);
+//        Double previousValue = weights.get(term.utf8ToString());
         String termString = term.utf8ToString();
 //        Double previousValue = weights.get(termString);
         weights.put(termString, previousValue + modifier * termFreqLocal);
@@ -183,7 +188,8 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
 
   private void updateFST(SortedMap<String, Double> weights) throws IOException {
     PositiveIntOutputs outputs = PositiveIntOutputs.getSingleton(true);
-    Builder<Long> fstBuilder = new Builder<Long>(FST.INPUT_TYPE.BYTE1, outputs);
+    Builder<Long> fstBuilder = new Builder<Long>(FST.INPUT_TYPE.BYTE1
+            , outputs);
     BytesRef scratchBytes = new BytesRef();
     IntsRef scratchInts = new IntsRef();
     for (Map.Entry<String, Double> entry : weights.entrySet()) {

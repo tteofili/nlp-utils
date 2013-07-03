@@ -1,7 +1,6 @@
 package com.github.tteofili.nlputils.lucene;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
