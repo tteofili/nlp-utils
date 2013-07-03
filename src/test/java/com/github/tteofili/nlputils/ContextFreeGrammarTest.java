@@ -1,8 +1,8 @@
 package com.github.tteofili.nlputils;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class ContextFreeGrammarTest {
         terminals.add("with");
         terminals.add("in");
 
-        Set<Rule> rules = new TreeSet<Rule>();
+        Set<Rule> rules = new HashSet<Rule>();
         rules.add(new Rule("S", "NP", "VP"));
         rules.add(new Rule("VP", "Vi"));
         rules.add(new Rule("VP", "Vt", "NP"));
@@ -68,5 +68,6 @@ public class ContextFreeGrammarTest {
         String[] expansion = contextFreeGrammar.leftMostDerivation("S");
         assertNotNull(expansion);
         assertTrue(expansion.length > 0);
+        System.err.println(Arrays.toString(expansion));
     }
 }

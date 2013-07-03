@@ -3,6 +3,7 @@ package com.github.tteofili.nlputils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -54,17 +55,22 @@ public class ContextFreeGrammar {
     }
 
     private String[] getExpansionForSymbol(String currentSymbol) {
-        Rule r = getRuleForWord(currentSymbol);
+        Rule r = getRuleForSymbol(currentSymbol);
         return r.getExpansion();
     }
 
-    private Rule getRuleForWord(String word) {
+    private Rule getRuleForSymbol(String word) {
+        ArrayList<Rule> possibleRules = new ArrayList<Rule>();
         for (Rule r : rules) {
             if (word.equals(r.getEntry())) {
-                return r;
+                possibleRules.add(r);
             }
         }
-        return null;
+        if (possibleRules.size() > 0) {
+            return possibleRules.get(new Random().nextInt(possibleRules.size()));
+        } else {
+            throw new RuntimeException("could not find a rule for expanding symbol " + word);
+        }
     }
 
 }
