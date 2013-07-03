@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 public class ContextFreeGrammarTest {
 
     private ContextFreeGrammar contextFreeGrammar;
+    private Set<String> terminals;
 
     @Before
     public void setUp() throws Exception {
@@ -37,7 +38,7 @@ public class ContextFreeGrammarTest {
 
         String startSymbol = "S";
 
-        Set<String> terminals = new HashSet<String>();
+        terminals = new HashSet<String>();
         terminals.add("sleeps");
         terminals.add("saw");
         terminals.add("man");
@@ -107,6 +108,9 @@ public class ContextFreeGrammarTest {
     private void checkExpansion(String[] expansion) {
         assertNotNull(expansion);
         assertTrue(expansion.length > 0);
+        for (String t : expansion) {
+            assertTrue("term " + t + " is not a terminal symbol", terminals.contains(t));
+        }
         System.err.println(Arrays.toString(expansion));
     }
 }
