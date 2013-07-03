@@ -30,6 +30,7 @@ public class ContextFreeGrammarTest {
         nonTerminals.add("Vt");
         nonTerminals.add("NN");
         nonTerminals.add("IN");
+        nonTerminals.add("PN");
 
         String startSymbol = "S";
 
@@ -42,6 +43,12 @@ public class ContextFreeGrammarTest {
         terminals.add("the");
         terminals.add("with");
         terminals.add("in");
+        terminals.add("tommaso");
+        terminals.add("simone");
+        terminals.add("joao");
+        terminals.add("tigro");
+        terminals.add("michele");
+        terminals.add("scarlett");
 
         Set<Rule> rules = new HashSet<Rule>();
         rules.add(new Rule("S", "NP", "VP"));
@@ -50,6 +57,7 @@ public class ContextFreeGrammarTest {
         rules.add(new Rule("VP", "VP", "PP"));
         rules.add(new Rule("NP", "DT", "NN"));
         rules.add(new Rule("NP", "NP", "PP"));
+        rules.add(new Rule("NP", "PN"));
         rules.add(new Rule("PP", "IN", "NP"));
         rules.add(new Rule("Vi", "sleeps"));
         rules.add(new Rule("Vt", "saw"));
@@ -59,6 +67,12 @@ public class ContextFreeGrammarTest {
         rules.add(new Rule("DT", "the"));
         rules.add(new Rule("IN", "with"));
         rules.add(new Rule("IN", "in"));
+        rules.add(new Rule("PN", "tommaso"));
+        rules.add(new Rule("PN", "simone"));
+        rules.add(new Rule("PN", "joao"));
+        rules.add(new Rule("PN", "tigro"));
+        rules.add(new Rule("PN", "michele"));
+        rules.add(new Rule("PN", "scarlett"));
 
         contextFreeGrammar = new ContextFreeGrammar(nonTerminals, terminals, rules, startSymbol);
     }

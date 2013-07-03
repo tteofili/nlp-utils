@@ -44,7 +44,7 @@ public class ContextFreeGrammar {
             c.add(word);
             return c;
         } else {
-            assert nonTerminalSymbols.contains(word);
+            assert nonTerminalSymbols.contains(word) : "word " + word + " is not contained in non terminals";
             String[] expansions = getExpansionForSymbol(word);
             Collection<String> c = new LinkedList<String>();
             for (String e : expansions) {
