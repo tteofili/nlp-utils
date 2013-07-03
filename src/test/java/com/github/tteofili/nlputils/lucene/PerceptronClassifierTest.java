@@ -13,7 +13,6 @@ import org.apache.lucene.index.SlowCompositeReaderWrapper;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
-import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
 import org.junit.Test;
 
@@ -29,8 +28,8 @@ public class PerceptronClassifierTest {
   public void ppsIntegrationTest() throws Exception {
 
     Directory dir = new RAMDirectory();
-    WhitespaceAnalyzer analyzer = new WhitespaceAnalyzer(Version.LUCENE_42);
-    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_42, analyzer);
+    WhitespaceAnalyzer analyzer = new WhitespaceAnalyzer(Version.LUCENE_43);
+    IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_43, analyzer);
     IndexWriter indexWriter = new IndexWriter(dir, conf);
 
     FieldType type = new FieldType();
