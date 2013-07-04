@@ -10,67 +10,67 @@ import java.util.Set;
  * A context free grammar
  */
 public class ContextFreeGrammar {
-    private Set<String> nonTerminalSymbols;
-    private Set<String> terminalSymbols;
-    private Set<Rule> rules;
-    private String startSymbol;
+  private Set<String> nonTerminalSymbols;
+  private Set<String> terminalSymbols;
+  private Set<Rule> rules;
+  private String startSymbol;
 
-    public ContextFreeGrammar(Set<String> nonTerminalSymbols, Set<String> terminalSymbols, Set<Rule> rules, String startSymbol) {
-        assert nonTerminalSymbols.contains(startSymbol) : "start symbol doesn't belong to non-terminal symbols set";
+  public ContextFreeGrammar(Set<String> nonTerminalSymbols, Set<String> terminalSymbols, Set<Rule> rules, String startSymbol) {
+    assert nonTerminalSymbols.contains(startSymbol) : "start symbol doesn't belong to non-terminal symbols set";
 
-        this.nonTerminalSymbols = nonTerminalSymbols;
-        this.terminalSymbols = terminalSymbols;
-        this.rules = rules;
-        this.startSymbol = startSymbol;
+    this.nonTerminalSymbols = nonTerminalSymbols;
+    this.terminalSymbols = terminalSymbols;
+    this.rules = rules;
+    this.startSymbol = startSymbol;
+  }
+
+
+  public String[] leftMostDerivation(String... words) {
+    ArrayList<String> expansion = new ArrayList<String>(words.length);
+
+    assert words.length > 0 && startSymbol.equals(words[0]);
+
+    for (String word : words) {
+      expansion.addAll(getTerminals(word));
     }
+    return expansion.toArray(new String[expansion.size()]);
 
+  }
 
-    public String[] leftMostDerivation(String... words) {
-        ArrayList<String> expansion = new ArrayList<String>(words.length);
+  private Collection<String> getTerminals(String word) {
 
-        assert words.length > 0 && startSymbol.equals(words[0]);
-
-        for (String word : words) {
-            expansion.addAll(getTerminals(word));
-        }
-        return expansion.toArray(new String[expansion.size()]);
-
+    if (terminalSymbols.contains(word)) {
+      Collection<String> c = new LinkedList<String>();
+      c.add(word);
+      return c;
+    } else {
+      assert nonTerminalSymbols.contains(word) : "word " + word + " is not contained in non terminals";
+      String[] expansions = getExpansionForSymbol(word);
+      Collection<String> c = new LinkedList<String>();
+      for (String e : expansions) {
+        c.addAll(getTerminals(e));
+      }
+      return c;
     }
+  }
 
-    private Collection<String> getTerminals(String word) {
+  private String[] getExpansionForSymbol(String currentSymbol) {
+    Rule r = getRuleForSymbol(currentSymbol);
+    return r.getExpansion();
+  }
 
-        if (terminalSymbols.contains(word)) {
-            Collection<String> c = new LinkedList<String>();
-            c.add(word);
-            return c;
-        } else {
-            assert nonTerminalSymbols.contains(word) : "word " + word + " is not contained in non terminals";
-            String[] expansions = getExpansionForSymbol(word);
-            Collection<String> c = new LinkedList<String>();
-            for (String e : expansions) {
-                c.addAll(getTerminals(e));
-            }
-            return c;
-        }
+  private Rule getRuleForSymbol(String word) {
+    ArrayList<Rule> possibleRules = new ArrayList<Rule>();
+    for (Rule r : rules) {
+      if (word.equals(r.getEntry())) {
+        possibleRules.add(r);
+      }
     }
-
-    private String[] getExpansionForSymbol(String currentSymbol) {
-        Rule r = getRuleForSymbol(currentSymbol);
-        return r.getExpansion();
+    if (possibleRules.size() > 0) {
+      return possibleRules.get(new Random().nextInt(possibleRules.size()));
+    } else {
+      throw new RuntimeException("could not find a rule for expanding symbol " + word);
     }
-
-    private Rule getRuleForSymbol(String word) {
-        ArrayList<Rule> possibleRules = new ArrayList<Rule>();
-        for (Rule r : rules) {
-            if (word.equals(r.getEntry())) {
-                possibleRules.add(r);
-            }
-        }
-        if (possibleRules.size() > 0) {
-            return possibleRules.get(new Random().nextInt(possibleRules.size()));
-        } else {
-            throw new RuntimeException("could not find a rule for expanding symbol " + word);
-        }
-    }
+  }
 
 }
