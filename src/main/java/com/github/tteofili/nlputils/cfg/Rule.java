@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.cfg;
 
 /**
  * A rule for context free grammars

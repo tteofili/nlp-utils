@@ -7,11 +7,14 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.tteofili.nlputils.cfg.ContextFreeGrammar;
+import com.github.tteofili.nlputils.cfg.Rule;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Testcase for {@link ContextFreeGrammar}
+ * Testcase for {@link com.github.tteofili.nlputils.cfg.ContextFreeGrammar}
  */
 public class ContextFreeGrammarTest {
 
@@ -31,7 +34,7 @@ public class ContextFreeGrammarTest {
     nonTerminals.add("Vt");
     nonTerminals.add("NN");
     nonTerminals.add("IN");
-    nonTerminals.add("PN");
+    nonTerminals.add("NNP");
     nonTerminals.add("CJ");
     nonTerminals.add("DJ");
     nonTerminals.add("P");
@@ -66,7 +69,7 @@ public class ContextFreeGrammarTest {
     rules.add(new Rule("VP", "VP", "PP"));
     rules.add(new Rule("NP", "DT", "NN"));
     rules.add(new Rule("NP", "NP", "PP"));
-    rules.add(new Rule("NP", "PN"));
+    rules.add(new Rule("NP", "NNP"));
     rules.add(new Rule("PP", "IN", "NP"));
     rules.add(new Rule("Vi", "sleeps"));
     rules.add(new Rule("Vt", "saw"));
@@ -76,12 +79,12 @@ public class ContextFreeGrammarTest {
     rules.add(new Rule("DT", "the"));
     rules.add(new Rule("IN", "with"));
     rules.add(new Rule("IN", "in"));
-    rules.add(new Rule("PN", "tommaso"));
-    rules.add(new Rule("PN", "simone"));
-    rules.add(new Rule("PN", "joao"));
-    rules.add(new Rule("PN", "tigro"));
-    rules.add(new Rule("PN", "michele"));
-    rules.add(new Rule("PN", "scarlett"));
+    rules.add(new Rule("NNP", "tommaso"));
+    rules.add(new Rule("NNP", "simone"));
+    rules.add(new Rule("NNP", "joao"));
+    rules.add(new Rule("NNP", "tigro"));
+    rules.add(new Rule("NNP", "michele"));
+    rules.add(new Rule("NNP", "scarlett"));
     rules.add(new Rule("CJ", "and"));
     rules.add(new Rule("DJ", "but"));
     rules.add(new Rule("DJ", "while"));
