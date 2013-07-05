@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.regression;
 
 /**
  * Simplest {@link Hypothesis} which just linear combines inputs with weights

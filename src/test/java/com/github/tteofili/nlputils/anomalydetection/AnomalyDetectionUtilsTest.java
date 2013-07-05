@@ -2,11 +2,13 @@ package com.github.tteofili.nlputils;
 
 import org.junit.Test;
 
+import com.github.tteofili.nlputils.anomalydetection.AnomalyDetectionUtils;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Testcase for {@link AnomalyDetectionUtils}
+ * Testcase for {@link com.github.tteofili.nlputils.anomalydetection.AnomalyDetectionUtils}
  */
 public class AnomalyDetectionUtilsTest {
   @Test

@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.classification;
 
 import java.util.Arrays;
 import java.util.Collection;

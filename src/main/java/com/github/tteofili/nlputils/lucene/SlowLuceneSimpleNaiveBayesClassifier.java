@@ -19,10 +19,10 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 
-import com.github.tteofili.nlputils.NaiveBayesClassifier;
+import com.github.tteofili.nlputils.classification.NaiveBayesClassifier;
 
 /**
- * A Lucene based {@link com.github.tteofili.nlputils.NaiveBayesClassifier}
+ * A Lucene based {@link com.github.tteofili.nlputils.classification.NaiveBayesClassifier}
  */
 public class SlowLuceneSimpleNaiveBayesClassifier implements NaiveBayesClassifier<String, String> {
 

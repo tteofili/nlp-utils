@@ -1,16 +1,18 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.ngram;
 
 import java.util.Collection;
 import java.util.LinkedList;
 
 import org.junit.Test;
 
+import com.github.tteofili.nlputils.ngram.NGramUtils;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Testcase for {@link NGramUtils}
+ * Testcase for {@link com.github.tteofili.nlputils.ngram.NGramUtils}
  */
 public class NGramUtilsTest {
   @Test

@@ -1,6 +1,9 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.anomalydetection;
 
 import java.math.BigDecimal;
+
+import com.github.tteofili.nlputils.TrainingExample;
+import com.github.tteofili.nlputils.TrainingSet;
 
 /**
  * Utility class for anomaly detection
@@ -8,9 +11,9 @@ import java.math.BigDecimal;
 public class AnomalyDetectionUtils {
 
   /**
-   * calculate Mu distribution parameters for a {@link TrainingSet}'s set of features
+   * calculate Mu distribution parameters for a {@link com.github.tteofili.nlputils.TrainingSet}'s set of features
    *
-   * @param inputs the {@link TrainingSet} to fit
+   * @param inputs the {@link com.github.tteofili.nlputils.TrainingSet} to fit
    * @return the <code>double[]</code> containing the Mu parameters for each feature
    * @throws Exception
    */

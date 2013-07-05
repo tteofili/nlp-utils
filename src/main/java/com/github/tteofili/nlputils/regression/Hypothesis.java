@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.regression;
 
 /**
  * An {@link Hypothesis} maps a series of inputs to an output

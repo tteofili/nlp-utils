@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.languagemodel;
 
 /**
  * Abstract impl of a noisy channel

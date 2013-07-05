@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.languagemodel;
 
 import java.util.Collection;
 import java.util.Collections;

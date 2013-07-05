@@ -1,6 +1,8 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.regression;
 
 import java.util.Arrays;
+
+import com.github.tteofili.nlputils.TrainingSet;
 
 /**
  * Utility class for calculating gradient descent

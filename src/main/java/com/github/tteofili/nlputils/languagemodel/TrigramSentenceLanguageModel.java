@@ -1,8 +1,10 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.languagemodel;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.github.tteofili.nlputils.ngram.NGramUtils;
 
 /**
  * A simple trigram language model for sentences made of <code>String</code> arrays

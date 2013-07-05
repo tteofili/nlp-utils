@@ -1,4 +1,7 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.regression;
+
+import com.github.tteofili.nlputils.TrainingExample;
+import com.github.tteofili.nlputils.TrainingSet;
 
 /**
  * Utility class for calculating various regression models costs

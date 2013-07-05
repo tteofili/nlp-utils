@@ -1,15 +1,17 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.classification;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 
+import com.github.tteofili.nlputils.classification.SimpleNaiveBayesClassifier;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Testcase for {@link SimpleNaiveBayesClassifier}
+ * Testcase for {@link com.github.tteofili.nlputils.classification.SimpleNaiveBayesClassifier}
  */
 public class SimpleNaiveBayesClassifierTest {
 

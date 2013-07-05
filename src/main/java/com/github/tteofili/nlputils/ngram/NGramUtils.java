@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.ngram;
 
 import java.util.Arrays;
 import java.util.Collection;

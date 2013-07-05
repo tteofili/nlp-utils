@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.classification;
 
 /**
  * A Naive Bayes Classifier for classifying objects of type I assigning classes of type O
