@@ -1,8 +1,10 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.anomalydetection;
 
 import org.junit.Test;
 
-import com.github.tteofili.nlputils.anomalydetection.AnomalyDetectionUtils;
+import com.github.tteofili.nlputils.TestUtils;
+import com.github.tteofili.nlputils.TrainingExample;
+import com.github.tteofili.nlputils.TrainingSet;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

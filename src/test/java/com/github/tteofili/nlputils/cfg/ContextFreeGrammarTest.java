@@ -1,4 +1,4 @@
-package com.github.tteofili.nlputils;
+package com.github.tteofili.nlputils.cfg;
 
 import java.util.Arrays;
 import java.util.HashSet;
