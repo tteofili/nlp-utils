@@ -15,7 +15,7 @@ public class LuceneDocToTermVector {
 
     TermsEnum fieldTermsEnum = fieldTerms.iterator(null);
     Double[] freqVector = null;
-    if (docTerms != null) {
+    if (docTerms != null && fieldTerms.size() > 0) {
       freqVector = new Double[(int) fieldTerms.size()];
       int i = 0;
       TermsEnum docTermsEnum = docTerms.iterator(null);

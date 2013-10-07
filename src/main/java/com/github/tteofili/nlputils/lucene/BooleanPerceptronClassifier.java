@@ -2,7 +2,6 @@ package com.github.tteofili.nlputils.lucene;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -111,8 +110,8 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
       BytesRef classBytes = new BytesRef();
       textDocValues.get(i, classBytes);
 
-      while (atomicReader.document(i) != null && !Arrays.equals(BinaryDocValues.MISSING, textBytes.bytes) &&
-              !Arrays.equals(BinaryDocValues.MISSING, classBytes.bytes)) {
+      while (atomicReader.document(i) != null && textBytes.bytes != null &&
+              classBytes.bytes != null) {
         ClassificationResult<Boolean> classificationResult = assignClass(textBytes.utf8ToString());
         Boolean assignedClass = classificationResult.getAssignedClass();
 
@@ -166,7 +165,7 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
 //    IntsRef scratchInts = new IntsRef();
 
     while ((term = termsEnum.next()) != null) {
-      cte.seekExact(term, true);
+      cte.seekExact(term);
       if (assignedClass != null) {
         long termFreqLocal = termsEnum.totalTermFreq();
         // update weights
@@ -187,7 +186,7 @@ public class BooleanPerceptronClassifier implements Classifier<Boolean> {
   }
 
   private void updateFST(SortedMap<String, Double> weights) throws IOException {
-    PositiveIntOutputs outputs = PositiveIntOutputs.getSingleton(true);
+    PositiveIntOutputs outputs = PositiveIntOutputs.getSingleton();
     Builder<Long> fstBuilder = new Builder<Long>(FST.INPUT_TYPE.BYTE1
             , outputs);
     BytesRef scratchBytes = new BytesRef();

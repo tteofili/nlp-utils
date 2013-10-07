@@ -78,7 +78,7 @@ public class BytesRefPerceptronClassifier implements Classifier<BytesRef> {
 
       BytesRef term;
       while ((term = termsEnum.next()) != null) {
-        cte.seekExact(term, true);
+        cte.seekExact(term);
         ClassificationResult<BytesRef> classificationResult = assignClass(indexSearcher.doc(scoreDoc.doc).getField(textFieldName).stringValue());
         BytesRef assignedClass = classificationResult.getAssignedClass();
         if (assignedClass != null) {
