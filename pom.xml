@@ -8,7 +8,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <lucene.version>4.5.0</lucene.version>
+    <lucene.version>4.5.1</lucene.version>
   </properties>
 
   <dependencies>

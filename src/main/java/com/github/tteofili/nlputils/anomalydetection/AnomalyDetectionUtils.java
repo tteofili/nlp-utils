@@ -60,6 +60,25 @@ public class AnomalyDetectionUtils {
    * @return the probability of the given input
    */
   public static double getGaussianProbability(TrainingExample x, double[] mus, double[] sigmas) {
+    return calculateGaussianProbability(x, mus, sigmas);
+  }
+
+  /**
+   * calculate the probability of a certain input in a certain training set
+   *
+   * @param x      the input
+   * @param set    the training set
+   * @return the probability of the given input
+   * @throws Exception 
+   */
+  public static double getGaussianProbability(TrainingExample x, TrainingSet set) throws Exception {
+    double[] mus = fitMus(set);
+    double[] sigmas = fitSigmas(mus, set);
+    return calculateGaussianProbability(x, mus, sigmas);
+  }
+
+  private static double calculateGaussianProbability(TrainingExample x, double[] mus,
+          double[] sigmas) {
     assert mus.length == sigmas.length : "parameters not aligned";
     BigDecimal px = new BigDecimal(1d);
     for (int i = 0; i < mus.length; i++) {

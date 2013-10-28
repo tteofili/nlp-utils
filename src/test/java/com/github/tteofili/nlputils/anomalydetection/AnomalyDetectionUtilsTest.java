@@ -26,4 +26,14 @@ public class AnomalyDetectionUtilsTest {
     assertTrue("negative probability " + probability, 0 <= probability);
     assertTrue("probability bigger than 1 " + probability, 1 >= probability);
   }
+
+  @Test
+  public void testGaussianDistributionProbability2() throws Exception {
+    TrainingSet trainingSet = new TrainingSet();
+    TestUtils.fillTrainingSet(trainingSet, 100, 5);
+    TrainingExample newInput = new TrainingExample(new double[]{1d, 2d, 1000d, 123d, 0.1d}, 0d);
+    double probability = AnomalyDetectionUtils.getGaussianProbability(newInput, trainingSet);
+    assertTrue("negative probability " + probability, 0 <= probability);
+    assertTrue("probability bigger than 1 " + probability, 1 >= probability);
+  }
 }
