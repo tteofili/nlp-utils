@@ -72,10 +72,12 @@ public class SlowLuceneSimpleNaiveBayesClassifier implements NaiveBayesClassifie
   private String[] tokenizeDoc(String doc) throws IOException {
     Collection<String> result = new LinkedList<String>();
     TokenStream tokenStream = analyzer.tokenStream(textFieldName, new StringReader(doc));
+    tokenStream.reset();
     while (tokenStream.incrementToken()) {
       CharTermAttribute charTermAttribute = tokenStream.getAttribute(CharTermAttribute.class);
       result.add(charTermAttribute.toString());
     }
+    tokenStream.close();
     return result.toArray(new String[result.size()]);
   }
 
