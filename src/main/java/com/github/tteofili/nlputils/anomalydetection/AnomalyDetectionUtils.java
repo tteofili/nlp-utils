@@ -17,7 +17,7 @@ public class AnomalyDetectionUtils {
    * @return the <code>double[]</code> containing the Mu parameters for each feature
    * @throws Exception
    */
-  public static double[] fitMus(TrainingSet inputs) throws Exception {
+  public static double[] fitMus(TrainingSet inputs) {
     assert inputs != null && inputs.size() > 0 : "empty dataset";
     int size = inputs.iterator().next().getInputs().length;
     double[] result = new double[size];
@@ -38,7 +38,7 @@ public class AnomalyDetectionUtils {
    * @return the <code>double[]</code> containing the standard deviations
    * @throws Exception
    */
-  public static double[] fitSigmas(double[] mus, TrainingSet inputs) throws Exception {
+  public static double[] fitSigmas(double[] mus, TrainingSet inputs) {
     assert inputs != null && inputs.size() > 0 : "empty dataset";
     int size = inputs.iterator().next().getInputs().length;
     double[] result = new double[size];

@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class TrainingSet implements Iterable<TrainingExample> {
 
-  private Collection<TrainingExample> trainingExamples = new HashSet<TrainingExample>();
+  private final Collection<TrainingExample> trainingExamples = new HashSet<TrainingExample>();
 
   @Override
   public Iterator<TrainingExample> iterator() {

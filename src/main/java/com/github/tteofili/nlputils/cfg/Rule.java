@@ -4,8 +4,8 @@ package com.github.tteofili.nlputils.cfg;
  * A rule for context free grammars
  */
 public class Rule implements Comparable<Rule> {
-  private String entry;
-  private String[] expansion;
+  private final String entry;
+  private final String[] expansion;
 
   public Rule(String entry, String... expansion) {
     this.entry = entry;

@@ -3,12 +3,8 @@ package com.github.tteofili.nlputils.cfg;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import com.github.tteofili.nlputils.cfg.ContextFreeGrammar;
-import com.github.tteofili.nlputils.cfg.Rule;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -59,6 +55,8 @@ public class ContextFreeGrammarTest {
     terminals.add("and");
     terminals.add("but");
     terminals.add("while");
+    terminals.add("of");
+    terminals.add("for");
 
     Set<Rule> rules = new HashSet<Rule>();
     rules.add(new Rule("S", "NP", "VP"));
@@ -79,6 +77,8 @@ public class ContextFreeGrammarTest {
     rules.add(new Rule("DT", "the"));
     rules.add(new Rule("IN", "with"));
     rules.add(new Rule("IN", "in"));
+    rules.add(new Rule("IN", "for"));
+    rules.add(new Rule("IN", "of"));
     rules.add(new Rule("NNP", "tommaso"));
     rules.add(new Rule("NNP", "simone"));
     rules.add(new Rule("NNP", "joao"));

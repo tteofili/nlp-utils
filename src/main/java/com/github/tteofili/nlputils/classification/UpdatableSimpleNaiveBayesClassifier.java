@@ -11,12 +11,12 @@ import java.util.TreeSet;
 public class UpdatableSimpleNaiveBayesClassifier implements NaiveBayesClassifier<List<String>, String> {
 
 
-  private Collection<String> vocabulary = new TreeSet<String>(); // the bag of all the words in the corpus
-  private Map<String, Integer> classCounts = new LinkedHashMap<String, Integer>();
+  private final Collection<String> vocabulary = new TreeSet<String>(); // the bag of all the words in the corpus
+  private final Map<String, Integer> classCounts = new LinkedHashMap<String, Integer>();
   private double noDocs = 0d;
-  private Map<String, Map<String, Integer>> nm = new HashMap<String, Map<String, Integer>>();
-  private Map<String, Double> priors = new HashMap<String, Double>();
-  private Map<String, Double> dens = new HashMap<String, Double>();
+  private final Map<String, Map<String, Integer>> nm = new HashMap<String, Map<String, Integer>>();
+  private final Map<String, Double> priors = new HashMap<String, Double>();
+  private final Map<String, Double> dens = new HashMap<String, Double>();
 
   public void addExample(String klass, List<String> words) {
     vocabulary.addAll(words);

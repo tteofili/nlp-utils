@@ -48,9 +48,9 @@ public class TrigramSentenceLanguageModel implements LanguageModel<String[]> {
   }
 
   private class Trigram {
-    private String x0;
-    private String x1;
-    private String x2;
+    private final String x0;
+    private final String x1;
+    private final String x2;
 
     private Trigram(String x0, String x1, String x2) {
       this.x0 = x0;

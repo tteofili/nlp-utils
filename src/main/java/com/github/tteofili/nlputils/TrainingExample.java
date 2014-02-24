@@ -4,8 +4,8 @@ package com.github.tteofili.nlputils;
  * A {@link TrainingExample} holds some inputs and a corresponding output
  */
 public class TrainingExample {
-  private double[] inputs;
-  private double output;
+  private final double[] inputs;
+  private final double output;
 
   public TrainingExample(double[] inputs, double output) {
     this.inputs = inputs;
